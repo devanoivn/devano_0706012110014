@@ -88,7 +88,7 @@ class _HomePageState extends State<Home> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("Hitung Ongkir"),
+        title: const Text("Calculate Shipping Costs"),
         centerTitle: true,
       ),
       body: // Adjust padding as needed
@@ -116,15 +116,15 @@ class _HomePageState extends State<Home> {
                                   items: [
                                     DropdownMenuItem(
                                       value: 'jne',
-                                      child: Text('jne'),
+                                      child: Text('JNE'),
                                     ),
                                     DropdownMenuItem(
                                       value: 'pos',
-                                      child: Text('pos'),
+                                      child: Text('POS'),
                                     ),
                                     DropdownMenuItem(
                                       value: 'tiki',
-                                      child: Text('tiki'),
+                                      child: Text('TIKI'),
                                     ),
                                   ],
                                   onChanged: (value) {
@@ -143,7 +143,7 @@ class _HomePageState extends State<Home> {
                                 flex: 2,
                                 child: TextFormField(
                                   decoration: InputDecoration(
-                                    labelText: 'Berat (gr)',
+                                    labelText: 'Weight (gr)',
                                   ),
                                   keyboardType: TextInputType.number,
                                   onChanged: (value) {
@@ -200,7 +200,7 @@ class _HomePageState extends State<Home> {
                                         value: provinceIdOrigin,
                                         isExpanded: true,
                                         decoration: InputDecoration(
-                                          labelText: 'Select Province',
+                                          labelText: 'Choose Province',
                                         ),
                                       ),
                               ),
@@ -210,6 +210,8 @@ class _HomePageState extends State<Home> {
                                 child: FutureBuilder<List<City>>(
                                   future: cityDataOrigin,
                                   builder: (context, snapshot) {
+                                    // if (costsList != null && costsList.isNotEmpty)
+                                    //   for (Cost cost in c)
                                     if (isLoadingCityOrigin) {
                                       return UiLoading.loadingSmall();
                                     } else if (snapshot.hasData) {
@@ -221,7 +223,7 @@ class _HomePageState extends State<Home> {
                                         elevation: 4,
                                         style: TextStyle(color: Colors.black),
                                         hint: selectedCityOrigin == null
-                                            ? Text('Pilih kota')
+                                            ? Text('Choose City')
                                             : Text(selectedCityOrigin.cityName),
                                         items: snapshot.data!
                                             .map<DropdownMenuItem<City>>(
@@ -241,7 +243,7 @@ class _HomePageState extends State<Home> {
                                         },
                                       );
                                     } else if (snapshot.hasError) {
-                                      return Text("Tidak ada data");
+                                      return Text("No one data");
                                     }
                                     return AbsorbPointer(
                                       absorbing: true,
@@ -252,7 +254,7 @@ class _HomePageState extends State<Home> {
                                         iconSize: 30,
                                         elevation: 4,
                                         style: TextStyle(color: Colors.black),
-                                        hint: Text('Pilih kota'),
+                                        hint: Text('Choose City'),
                                         items: [],
                                         onChanged: null,
                                       ),
@@ -307,7 +309,7 @@ class _HomePageState extends State<Home> {
                                         value: provinceIdDestination,
                                         isExpanded: true,
                                         decoration: InputDecoration(
-                                          labelText: 'Select Province',
+                                          labelText: 'Choose Province',
                                         ),
                                       ),
                               ),
@@ -328,7 +330,7 @@ class _HomePageState extends State<Home> {
                                         elevation: 4,
                                         style: TextStyle(color: Colors.black),
                                         hint: selectedCityDestination == null
-                                            ? Text('Pilih kota')
+                                            ? Text('Choose City')
                                             : Text(selectedCityDestination
                                                 .cityName),
                                         items: snapshot.data!
@@ -349,7 +351,7 @@ class _HomePageState extends State<Home> {
                                         },
                                       );
                                     } else if (snapshot.hasError) {
-                                      return Text("Tidak ada data");
+                                      return Text("No one data");
                                     }
                                     return AbsorbPointer(
                                       absorbing: true,
@@ -360,7 +362,7 @@ class _HomePageState extends State<Home> {
                                         iconSize: 30,
                                         elevation: 4,
                                         style: TextStyle(color: Colors.black),
-                                        hint: Text('Pilih kota'),
+                                        hint: Text('Choose City'),
                                         items: [],
                                         onChanged: null,
                                       ),
@@ -382,7 +384,7 @@ class _HomePageState extends State<Home> {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         content: Text(
-                                            'Please Fill In all necesasary informations!'),
+                                            'Please Fill In all informations!'),
                                       ),
                                     );
                                   } else {
@@ -399,7 +401,7 @@ class _HomePageState extends State<Home> {
                                     });
                                   }
                                 },
-                                child: Text('Hitung Estimasi harga'),
+                                child: Text('Calculate the costs'),
                               ),
                             ),
                           ),
@@ -416,7 +418,7 @@ class _HomePageState extends State<Home> {
                       child: costData.isEmpty || costData[0].cost.isEmpty
                           ? const Align(
                               alignment: Alignment.center,
-                              child: Text("Tidak Ada Data"),
+                              child: Text("No one Data"),
                             )
                           : ListView.builder(
                               itemCount: costData.length,

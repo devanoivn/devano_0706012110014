@@ -31,8 +31,8 @@ class _CardProvinceState extends State<CardProvince> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Biaya: Rp.${c.cost[0].value}"),
-                Text("Estimasi Sampai: ${c.cost[0].etd}"),
+                Text("Costs: Rp.${c.cost[0].value}"),
+                Text("Estimate Arrived: ${c.cost[0].etd}"),
               ],
             ),
           ],

@@ -18,21 +18,21 @@ class City extends Equatable {
   });
 
   factory City.fromJson(Map<String, dynamic> json) => City(
-        cityId: json['city_id'] as String?,
-        provinceId: json['province_id'] as String?,
+        cityId: json['cityid'] as String?,
+        provinceId: json['provinceid'] as String?,
         province: json['province'] as String?,
         type: json['type'] as String?,
-        cityName: json['city_name'] as String?,
-        postalCode: json['postal_code'] as String?,
+        cityName: json['cityname'] as String?,
+        postalCode: json['postalcode'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
-        'city_id': cityId,
-        'province_id': provinceId,
+        'cityid': cityId,
+        'provinceid': provinceId,
         'province': province,
         'type': type,
-        'city_name': cityName,
-        'postal_code': postalCode,
+        'cityname': cityName,
+        'postalcode': postalCode,
       };
 
   @override
