@@ -392,37 +392,43 @@ class _HomePageState extends State<Home> {
                             flex: 1,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  if (cityIdDestination == null ||
-                                      cityIdOrigin == null ||
-                                      weight < 1) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                            'Please Fill In all informations!'),
-                                      ),
-                                    );
-                                  } else {
-                                    setState(() {
-                                      isLoading = true;
-                                    });
-                                    setState(() async {
-                                      costData = await getCost(
-                                        pilihKurir,
-                                        cityIdOrigin,
-                                        cityIdDestination,
-                                        weight,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    if (cityIdDestination == null ||
+                                        cityIdOrigin == null ||
+                                        weight < 1) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                              'Please Fill In all informations!'),
+                                        ),
                                       );
-                                    });
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.blue, // Warna latar biru
-                                ),
-                                child: Text(
-                                  'Calculate the costs',
-                                  style: TextStyle(color: Colors.white),
+                                    } else {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+                                      setState(() async {
+                                        costData = await getCost(
+                                          pilihKurir,
+                                          cityIdOrigin,
+                                          cityIdDestination,
+                                          weight,
+                                        );
+                                      });
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.blue, // Warna latar biru
+                                  ),
+                                  child: Text(
+                                    'Calculate the costs',
+                                    style: TextStyle(
+                                        color:
+                                            Colors.white), // Warna teks putih
+                                  ),
                                 ),
                               ),
                             ),
