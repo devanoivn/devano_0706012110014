@@ -2,17 +2,17 @@ part of 'services.dart';
 
 class MasterDataService {
   static Future<List<Province>> getProvince() async {
-    var response = await http.get(Uri.https(Const.baseUrl, "/starter/province"),
+    var respon = await http.get(Uri.https(Const.baseUrl, "/starter/province"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'key': Const.apiKey,
         });
 
-    var job = json.decode(response.body);
+    var ongkir = json.decode(respon.body);
     List<Province> result = [];
 
-    if (response.statusCode == 200) {
-      result = (job['rajaongkir']['results'] as List)
+    if (respon.statusCode == 200) {
+      result = (ongkir['rajaongkir']['results'] as List)
           .map((e) => Province.fromJson(e))
           .toList();
     }
@@ -20,16 +20,16 @@ class MasterDataService {
   }
 
   static Future<List<City>> getCity(var provId) async {
-    var response = await http.get(Uri.https(Const.baseUrl, "/starter/city"),
+    var respon = await http.get(Uri.https(Const.baseUrl, "/starter/city"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           'key': Const.apiKey,
         });
 
-    var job = json.decode(response.body);
+    var ongkir = json.decode(respon.body);
     List<City> result = [];
-    if (response.statusCode == 200) {
-      result = (job['rajaongkir']['results'] as List)
+    if (respon.statusCode == 200) {
+      result = (ongkir['rajaongkir']['results'] as List)
           .map((e) => City.fromJson(e))
           .toList();
     }
@@ -45,16 +45,16 @@ class MasterDataService {
   }
 
   static Future<List<Costs>> getCost(
-      var origin, var dest, var weight, var courier) async {
+      var kota, var tujuan, var berat, var kurir) async {
     Map<String, dynamic> requestBody = {
-      "origin": origin,
-      "destination": dest,
-      "weight": weight,
-      "courier": courier,
+      "origin": kota,
+      "destination": tujuan,
+      "weight": berat,
+      "courier": kurir,
     };
 
     String requestBodyJson = jsonEncode(requestBody);
-    var response = await http.post(
+    var respon = await http.post(
       Uri.https(Const.baseUrl, "/starter/cost"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -63,8 +63,8 @@ class MasterDataService {
       body: requestBodyJson,
     );
 
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
+    if (respon.statusCode == 200) {
+      var data = jsonDecode(respon.body);
       // The structure of your response may vary, adjust accordingly
       var costsList = data['rajaongkir']['results'][0]['costs'] as List?;
 

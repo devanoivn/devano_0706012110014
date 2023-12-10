@@ -1,5 +1,3 @@
-// ignore_for_file: sized_box_for_whitespace, prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 part of 'pages.dart';
 
 class Home extends StatefulWidget {
@@ -11,14 +9,11 @@ class Home extends StatefulWidget {
 
 class _HomePageState extends State<Home> {
   List<Province> provinceData = [];
-
-  ///
   bool isLoading = false;
   bool isLoadingCityOrigin = false;
   bool isLoadingCityDestination = false;
 
   Future<dynamic> getProvinces() async {
-    ////
     await MasterDataService.getProvince().then((value) {
       setState(() {
         provinceData = value;
@@ -40,13 +35,13 @@ class _HomePageState extends State<Home> {
   dynamic cityIdDestination;
   dynamic selectedCityDestination;
 
-  Future<List<City>> getCities(var provId, var originORdestination) async {
+  Future<List<City>> getCities(var provinsiID, var asalTujuan) async {
     ////
     dynamic city;
-    await MasterDataService.getCity(provId).then((value) {
+    await MasterDataService.getCity(provinsiID).then((value) {
       setState(() {
         city = value;
-        if (originORdestination == 'origin') {
+        if (asalTujuan == 'origin') {
           isLoadingCityOrigin = false;
         } else {
           isLoadingCityDestination = false;
@@ -57,15 +52,13 @@ class _HomePageState extends State<Home> {
     return city;
   }
 
-  var selectedCourier = 'jne';
+  var pilihKurir = 'jne';
   List<Costs> costData = [];
 
-  Future<dynamic> getCost(
-      var courier, var origin, var destination, var weight) async {
+  Future<dynamic> getCost(var kurir, var asal, var tujuan, var berat) async {
     ////
     dynamic costs;
-    await MasterDataService.getCost(origin, destination, weight, courier)
-        .then((value) {
+    await MasterDataService.getCost(asal, tujuan, berat, kurir).then((value) {
       setState(() {
         costs = value;
       });
@@ -88,11 +81,14 @@ class _HomePageState extends State<Home> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("Calculate Shipping Costs"),
+        title: Text(
+          "Calculate Shipping Costs",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
-      body: // Adjust padding as needed
-          AbsorbPointer(
+      backgroundColor: Color.fromARGB(255, 128, 170, 224),
+      body: AbsorbPointer(
         absorbing: isLoading,
         child: Stack(
           children: [
@@ -106,8 +102,16 @@ class _HomePageState extends State<Home> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          //first ROW for BERAT AND PENGIRIMAN OPTIONS
+                          // Other widgets above "Choose Courier" if any
+                          Text(
+                            "Choose Courier",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
                           Row(
                             children: [
                               Flexible(
@@ -116,24 +120,36 @@ class _HomePageState extends State<Home> {
                                   items: [
                                     DropdownMenuItem(
                                       value: 'jne',
-                                      child: Text('JNE'),
+                                      child: Text(
+                                        'JNE',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                     DropdownMenuItem(
                                       value: 'pos',
-                                      child: Text('POS'),
+                                      child: Text(
+                                        'POS',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                     DropdownMenuItem(
                                       value: 'tiki',
-                                      child: Text('TIKI'),
+                                      child: Text(
+                                        'TIKI',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ],
                                   onChanged: (value) {
                                     setState(() {
-                                      selectedCourier = value
+                                      pilihKurir = value
                                           as String; // Update selected value
                                     });
                                   },
-                                  value: selectedCourier,
+                                  value: pilihKurir,
                                   isDense: true, // Reduces the vertical space
                                   isExpanded: false,
                                 ),
@@ -393,7 +409,7 @@ class _HomePageState extends State<Home> {
                                     });
                                     setState(() async {
                                       costData = await getCost(
-                                        selectedCourier,
+                                        pilihKurir,
                                         cityIdOrigin,
                                         cityIdDestination,
                                         weight,
@@ -401,7 +417,13 @@ class _HomePageState extends State<Home> {
                                     });
                                   }
                                 },
-                                child: Text('Calculate the costs'),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.blue, // Warna latar biru
+                                ),
+                                child: Text(
+                                  'Calculate the costs',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
